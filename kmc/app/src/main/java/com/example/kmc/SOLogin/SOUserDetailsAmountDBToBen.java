@@ -246,7 +246,7 @@ public class SOUserDetailsAmountDBToBen extends AppCompatActivity {
 
     public void reject(View view) {
         String approved="no";
-        status="Rejected";
+        status= "Rejected By SO: "+getIntent().getStringExtra("uStatus").toString();
         updateData(aadharNumber,approved,status);
     }
     private void updateData(String aadharNumber, String approved,String status) {

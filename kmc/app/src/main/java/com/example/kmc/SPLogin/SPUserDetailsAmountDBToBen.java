@@ -225,7 +225,7 @@ public class SPUserDetailsAmountDBToBen extends AppCompatActivity {
 
     public void reject(View view) {
         String approved="no";
-        status="Rejected";
+        status= "Rejected By SP: "+getIntent().getStringExtra("uStatus").toString();
         updateData(aadharNumber,approved,status);
     }
     private void updateData(String aadharNumber, String approved,String status) {
@@ -248,7 +248,7 @@ public class SPUserDetailsAmountDBToBen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(SPUserDetailsAmountDBToBen.this, "Status Approval: "+approved, Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SPUserDetailsAmountDBToBen.this, SPUserDetailsAmountDBToBen.class);
+                                    Intent intent = new Intent(SPUserDetailsAmountDBToBen.this, SPAmountDBToBen.class);
                                     intent.putExtra("village1",village1);
                                     intent.putExtra("village2",village2);
                                     startActivity(intent);

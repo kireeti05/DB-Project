@@ -300,7 +300,7 @@ public class CollectorUserDetailsAmountDBToBen extends AppCompatActivity {
     public void reject(View view) {
         String collectorSanctionAmount="";
         String approved="no";
-        status="Rejected";
+        status= "Rejected By Collector: "+getIntent().getStringExtra("uStatus").toString();
         int approvalAmount=Integer.parseInt(getIntent().getStringExtra("uApprovalAmount").toString());
         updateData(aadharNumber,approved,status,collectorSanctionAmount,Integer.toString(approvalAmount));
     }

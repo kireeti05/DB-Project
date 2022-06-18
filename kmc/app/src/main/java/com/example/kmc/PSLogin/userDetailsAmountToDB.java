@@ -180,7 +180,10 @@ public class userDetailsAmountToDB extends AppCompatActivity {
 //        {
 //            uploadImage.setEnabled(true);
 //        }
-        updateData(aadharNumber,amountRequired);
+        if(Integer.parseInt(getIntent().getStringExtra("uApprovalAmount").toString())<=1000000)
+            updateData(aadharNumber,amountRequired);
+        else
+            Toast.makeText(this, "Amount Limit Exceeded", Toast.LENGTH_SHORT).show();
 //        updateData(aadharNumber,vendorAgency,vendorName,vendorBankName,vendorBankAccount,vendorBankIFSC);
     }
 

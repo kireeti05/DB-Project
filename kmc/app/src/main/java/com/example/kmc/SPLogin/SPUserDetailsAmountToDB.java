@@ -213,7 +213,7 @@ public class SPUserDetailsAmountToDB extends AppCompatActivity {
     public void approve(View view) {
         String approved="yes";
         status=spApprovedAmount.trim()+" approved by Special Officer to DB Account ";
-        if(Integer.parseInt(spApprovedAmount)>1000000)
+        if(Integer.parseInt(spApprovedAmount)<=1000000)
         {
             updateData(aadharNumber,approved,status);
         }else{
@@ -224,7 +224,7 @@ public class SPUserDetailsAmountToDB extends AppCompatActivity {
 
     public void reject(View view) {
         String approved="no";
-        status="Rejected";
+        status= "Rejected By SP: "+getIntent().getStringExtra("uStatus").toString();
         updateData(aadharNumber,approved,status);
     }
     private void updateData(String aadharNumber, String approved,String status) {

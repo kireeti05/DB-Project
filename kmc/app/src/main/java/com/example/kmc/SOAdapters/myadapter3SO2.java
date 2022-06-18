@@ -56,7 +56,9 @@ public class myadapter3SO2 extends RecyclerView.Adapter<myadapter3SO2.myviewhold
         if(datalist.get(position).getStatus().toLowerCase(Locale.ROOT).equals(approve.toLowerCase(Locale.ROOT)))
         {
             holder.t2.setTextColor(Color.parseColor("#00873E"));
-        }else if(datalist.get(position).getStatus().toLowerCase(Locale.ROOT).equals(reject.toLowerCase(Locale.ROOT)))
+        }else if(datalist.get(position).getSpApproved().equals("no")||datalist.get(position).getSpApproved2().equals("no")
+                ||datalist.get(position).getSpApproved3().equals("no")||datalist.get(position).getSoApproved().equals("no")
+                ||datalist.get(position).getCtrApproved().equals("no")||datalist.get(position).getCtrApproved2().equals("no"))
         {
             holder.t2.setTextColor(Color.parseColor("#FF0000"));
         }else if(datalist.get(position).getStatus().toLowerCase(Locale.ROOT).equals(collector_action_required1.toLowerCase(Locale.ROOT))||datalist.get(position).getStatus().toLowerCase(Locale.ROOT).equals(collector_action_required2.toLowerCase(Locale.ROOT)))
@@ -99,6 +101,8 @@ public class myadapter3SO2 extends RecyclerView.Adapter<myadapter3SO2.myviewhold
                 i.putExtra("uDbBankName",datalist.get(position).getDbBankName());
                 i.putExtra("uDbAccountNo",datalist.get(position).getDbBankAccNo());
                 i.putExtra("uDbIFSC",datalist.get(position).getDbBankIFSC());
+                i.putExtra("uStatus",datalist.get(position).getStatus());
+
 
                 i.putExtra("mandal",mandal);
                 i.putExtra("sector",sector);
