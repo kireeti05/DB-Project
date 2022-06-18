@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kmc">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Kmc">
+        <activity
+            android:name=".PSLogin.PSMasterReport"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorGroundingUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOGroundingUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPGroundingUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSGroundingUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorUserDetailsAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOUserDetailsAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SO_Action"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPUserDetailsAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.userDetailsAmountDBtoBen"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorUserDetailsAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorAction"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.userDetailsAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SP_Action"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PS_Action"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorVillageSelection"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorMandalSelection"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOListOfBen"
+            android:exported="false" />
+        <activity
+            android:name=".login.SOLogin"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPUserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SPUserDetailsAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".login.Collector_Login"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorListOfBen"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.userDetails"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.addIndividual"
+            android:exported="false" />
+        <activity
+            android:name=".login.SPLogin"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.ListOfBen"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSAddEdit"
+            android:exported="false" />
+        <activity
+            android:name=".login.PSLogin"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
