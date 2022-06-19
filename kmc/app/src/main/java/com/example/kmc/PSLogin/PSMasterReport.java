@@ -74,4 +74,8 @@ public class PSMasterReport extends AppCompatActivity {
         setActionBar(toolbar);
 
     }
+
+    public void createPdf(View view) {
+
+    }
 }

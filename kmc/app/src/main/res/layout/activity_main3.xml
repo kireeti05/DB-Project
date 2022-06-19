@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".PSLogin.PSMasterReport">
+    tools:context=".PSLogin.PSMasterReport"
+    >
 
     <include layout="@layout/appbar" />
 
@@ -43,7 +44,17 @@
             android:layout_height="wrap_content"
             android:indeterminate="true" />
 
-        
+        <Button
+            android:id="@+id/pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate Pdf"
+            android:layout_below="@id/password"
+            android:onClick="createPdf"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
 
         <TextView
             android:id="@+id/total"
@@ -53,7 +64,7 @@
             android:gravity="center"
             android:paddingLeft="20dp"
             android:text="Total Amount:"
-            android:textColor="#000000" />
+            android:textColor="#000" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
