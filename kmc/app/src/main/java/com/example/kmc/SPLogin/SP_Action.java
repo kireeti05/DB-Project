@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.kmc.PSLogin.PSMasterReport;
 import com.example.kmc.R;
 import com.example.kmc.login.Collector_Login;
 import com.example.kmc.login.SOLogin;
@@ -17,7 +18,7 @@ import com.example.kmc.login.SPLogin;
 
 public class SP_Action extends AppCompatActivity implements View.OnClickListener {
 
-    public CardView card1,card2,card3,card4;
+    public CardView card1,card2,card3,card4,card5;
     String village1;
     String village2;
 
@@ -30,11 +31,15 @@ public class SP_Action extends AppCompatActivity implements View.OnClickListener
         card2 = (CardView) findViewById(R.id.c2);
         card3 = (CardView) findViewById(R.id.c3);
         card4 = (CardView) findViewById(R.id.c4);
+        card5 = (CardView) findViewById(R.id.c5);
+
 
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
         card3.setOnClickListener(this);
         card4.setOnClickListener(this);
+        card5.setOnClickListener(this);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("village1");
@@ -77,6 +82,12 @@ public class SP_Action extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.c4:
                 i = new Intent(this, SPGrounding.class);
+                i.putExtra("village1",village1);
+                i.putExtra("village2",village2);
+                startActivity(i);
+                break;
+            case R.id.c5:
+                i = new Intent(this, SPMasterReport.class);
                 i.putExtra("village1",village1);
                 i.putExtra("village2",village2);
                 startActivity(i);

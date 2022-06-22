@@ -34,45 +34,38 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout1"
         android:orientation="vertical"
+        android:gravity="center_horizontal|center_vertical"
+        android:id="@+id/lld"
         android:weightSum="1"
+
         tools:ignore="MissingConstraints">
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:indeterminate="true" />
-
-        <Button
-            android:id="@+id/pdf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Generate Pdf"
-            android:layout_below="@id/password"
-            android:onClick="createPdf"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            style="?attr/materialButtonOutlinedStyle"
-            />
 
         <TextView
             android:id="@+id/total"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingLeft="20dp"
             android:text="Total Amount:"
-            android:textColor="#000" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:textColor="#000"
+            android:textSize="20dp" />
+        <Button
+            android:id="@+id/pdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="60dp" />
+            android:text="Generate XL"
+            android:onClick="generateXL"
+            android:layout_below="@id/password"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
     </LinearLayout>
 
 </RelativeLayout>

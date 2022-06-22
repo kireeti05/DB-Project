@@ -30,10 +30,12 @@ public class SO_Action extends AppCompatActivity implements View.OnClickListener
         card1 = (CardView) findViewById(R.id.c1);
         card2 = (CardView) findViewById(R.id.c2);
         card3 = (CardView) findViewById(R.id.c3);
+        card4 = (CardView) findViewById(R.id.c4);
 
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
         card3.setOnClickListener(this);
+        card4.setOnClickListener(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("mandal");
@@ -78,8 +80,10 @@ public class SO_Action extends AppCompatActivity implements View.OnClickListener
                 startActivity(i);
                 break;
             case R.id.c4:
-//                i = new Intent(this, Collector_Login.class);
-//                startActivity(i);
+                i = new Intent(this, SOMasterReport.class);
+                i.putExtra("mandal",mandal);
+                i.putExtra("sector",sector);
+                startActivity(i);
                 break;
         }
 
