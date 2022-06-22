@@ -99,13 +99,13 @@ public class SOMasterReport extends AppCompatActivity {
                             if(obj.getMandal().toLowerCase(Locale.ROOT).equals(mandal.toLowerCase(Locale.ROOT))) {
                                     if (obj.getPreferredUnit().toLowerCase(Locale.ROOT).equals(sector.toLowerCase(Locale.ROOT))) {
                                         if (obj.getSpApproved().equals("yes"))
-                                            total_amount += Integer.parseInt(obj.getApprovalAmount());
+                                            total_amount+=Float.parseFloat(obj.getApprovalAmount());
                                         datalist.add(obj);
                                     }
                             }
 
                         }
-                        total.setText("Total Amount Approved: "+String.valueOf(total_amount)+"/"+String.valueOf(list.size()*1000000));
+                        total.setText("Total Amount Approved: "+String.valueOf(total_amount/100000.0)+"L/"+String.valueOf(list.size()*10)+"L");
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -147,70 +147,70 @@ public class SOMasterReport extends AppCompatActivity {
             //workbook.createSheet("Report", 0);
             WritableSheet sheet = workbook.createSheet("First Sheet", 0);
             Label label0 = new Label(0,0,"Name");
-            Label label2 = new Label(1,0,"Father Name");
-            Label label1 = new Label(2,0,"Aadhar");
-            Label label3 = new Label(3,0,"Village");
-            Label label4 = new Label(4,0,"Mandal");
-            Label label5 = new Label(5,0,"Preferred Unit");
-            Label label6 = new Label(6,0,"Bank Name");
-            Label label7 = new Label(7,0,"Bank Acc No");
-            Label label8 = new Label(8,0,"Bank IFSC");
-            Label label9 = new Label(9,0,"Vendor Name");
-            Label label10 = new Label(10,0,"Vendor Agency");
-            Label label11 = new Label(11,0,"Vendor Bank Name");
-            Label label12 = new Label(12,0,"Vendor Bank Acc No");
-            Label label13 = new Label(13,0,"Vendor Bank IFSC");
-            Label label14 = new Label(14,0,"DB Bank Name");
-            Label label15 = new Label(15,0,"DB Bank Acc No");
-            Label label16 = new Label(16,0,"DB Bank IFSC");
-            Label label17 = new Label(17,0,"Grounding Status");
-            Label label18 = new Label(18,0,"Approved Amount");
-            Label label19 = new Label(19,0,"DB Amount");
+//            Label label2 = new Label(1,0,"Father Name");
+//            Label label1 = new Label(2,0,"Aadhar");
+            Label label1 = new Label(1,0,"Village");
+            Label label2 = new Label(2,0,"Mandal");
+            Label label3 = new Label(3,0,"Preferred Unit");
+//            Label label6 = new Label(6,0,"Bank Name");
+//            Label label7 = new Label(7,0,"Bank Acc No");
+//            Label label8 = new Label(8,0,"Bank IFSC");
+//            Label label9 = new Label(9,0,"Vendor Name");
+//            Label label10 = new Label(10,0,"Vendor Agency");
+//            Label label11 = new Label(11,0,"Vendor Bank Name");
+//            Label label12 = new Label(12,0,"Vendor Bank Acc No");
+//            Label label13 = new Label(13,0,"Vendor Bank IFSC");
+//            Label label14 = new Label(14,0,"DB Bank Name");
+//            Label label15 = new Label(15,0,"DB Bank Acc No");
+//            Label label16 = new Label(16,0,"DB Bank IFSC");
+            Label label4 = new Label(4,0,"Grounding Status");
+            Label label5 = new Label(5,0,"Approved Amount");
+            Label label6 = new Label(6,0,"DB Amount");
             int i=1;
             for(DocumentSnapshot d:list) {
                 obj = d.toObject(Individual.class);
                 if (obj.getMandal().toLowerCase(Locale.ROOT).equals(mandal.toLowerCase(Locale.ROOT))) {
                     if (obj.getPreferredUnit().toLowerCase(Locale.ROOT).equals(sector.toLowerCase(Locale.ROOT))) {
                         if (obj.getSpApproved().equals("yes")) {
-                            Label name = new Label(0, i, obj.getName());
+                            Label name = new Label(0,i,obj.getName());
                             sheet.addCell(name);
-                            Label fname = new Label(1, i, obj.getFatherName());
-                            sheet.addCell(fname);
-                            Label aadhar = new Label(2, i, obj.getAadhar());
-                            sheet.addCell(aadhar);
-                            Label village = new Label(3, i, obj.getVillage());
+//                        Label fname = new Label(1,i,obj.getFatherName());
+//                        sheet.addCell(fname);
+//                        Label  aadhar= new Label(2,i,obj.getAadhar());
+//                        sheet.addCell(aadhar);
+                            Label village = new Label(1,i,obj.getVillage());
                             sheet.addCell(village);
-                            Label mandal = new Label(4, i, obj.getMandal());
+                            Label mandal = new Label(2,i,obj.getMandal());
                             sheet.addCell(mandal);
-                            Label unit = new Label(5, i, obj.getPreferredUnit());
+                            Label unit = new Label(3,i,obj.getPreferredUnit());
                             sheet.addCell(unit);
-                            Label bname = new Label(6, i, obj.getBankName());
-                            sheet.addCell(bname);
-                            Label bacc = new Label(7, i, obj.getBankAccNo());
-                            sheet.addCell(bacc);
-                            Label bifsc = new Label(8, i, obj.getBankIFSC());
-                            sheet.addCell(bifsc);
-                            Label vname = new Label(9, i, obj.getVendorName());
-                            sheet.addCell(vname);
-                            Label vAgency = new Label(10, i, obj.getVendorAgency());
-                            sheet.addCell(vAgency);
-                            Label vBankName = new Label(11, i, obj.getVendorBankName());
-                            sheet.addCell(vBankName);
-                            Label VBankAcc = new Label(12, i, obj.getVendorAccountNo());
-                            sheet.addCell(VBankAcc);
-                            Label vIFSC = new Label(13, i, obj.getVendorIFSC());
-                            sheet.addCell(vIFSC);
-                            Label dbBankName = new Label(14, i, obj.getDbBankName());
-                            sheet.addCell(dbBankName);
-                            Label dbAccount = new Label(15, i, obj.getDbBankAccNo());
-                            sheet.addCell(dbAccount);
-                            Label dbIFSC = new Label(16, i, obj.getDbBankIFSC());
-                            sheet.addCell(dbIFSC);
-                            Label gStatus = new Label(17, i, obj.getGroundingStatus());
+//                        Label bname = new Label(6,i,obj.getBankName());
+//                        sheet.addCell(bname);
+//                        Label bacc = new Label(7,i,obj.getBankAccNo());
+//                        sheet.addCell(bacc);
+//                        Label bifsc = new Label(8,i,obj.getBankIFSC());
+//                        sheet.addCell(bifsc);
+//                        Label vname = new Label(9,i,obj.getVendorName());
+//                        sheet.addCell(vname);
+//                        Label vAgency = new Label(10,i,obj.getVendorAgency());
+//                        sheet.addCell(vAgency);
+//                        Label vBankName = new Label(11,i,obj.getVendorBankName());
+//                        sheet.addCell(vBankName);
+//                        Label VBankAcc = new Label(12,i,obj.getVendorAccountNo());
+//                        sheet.addCell(VBankAcc);
+//                        Label vIFSC = new Label(13,i,obj.getVendorIFSC());
+//                        sheet.addCell(vIFSC);
+//                        Label dbBankName = new Label(14,i,obj.getDbBankName());
+//                        sheet.addCell(dbBankName);
+//                        Label dbAccount = new Label(15,i,obj.getDbBankAccNo());
+//                        sheet.addCell(dbAccount);
+//                        Label dbIFSC = new Label(16,i,obj.getDbBankIFSC());
+//                        sheet.addCell(dbIFSC);
+                            Label gStatus = new Label(4,i,obj.getGroundingStatus());
                             sheet.addCell(gStatus);
-                            Label aAmount = new Label(18, i, obj.getApprovalAmount());
+                            Label aAmount = new Label(5,i,obj.getApprovalAmount());
                             sheet.addCell(aAmount);
-                            Label dbAmount = new Label(19, i, obj.getDbAccount());
+                            Label dbAmount = new Label(6,i,obj.getDbAccount());
                             sheet.addCell(dbAmount);
                             i++;
                         }
@@ -224,31 +224,31 @@ public class SOMasterReport extends AppCompatActivity {
 //            Label label1 = new Label(0,1,"first");
 //            Label label = new Label(0, 2, "SECOND");
 //            Label label4 = new Label(1,1,String.valueOf(a));
-            Toast.makeText(context, "t1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Excel Downloading...", Toast.LENGTH_SHORT).show();
             try {
                 sheet.addCell(label0);
+//                sheet.addCell(label1);
+//                sheet.addCell(label2);
                 sheet.addCell(label1);
                 sheet.addCell(label2);
                 sheet.addCell(label3);
+//                sheet.addCell(label6);
+//                sheet.addCell(label7);
+//                sheet.addCell(label8);
+//                sheet.addCell(label9);
+//                sheet.addCell(label10);
+//                sheet.addCell(label11);
+//                sheet.addCell(label12);
+//                sheet.addCell(label13);
+//                sheet.addCell(label14);
+//                sheet.addCell(label15);
+//                sheet.addCell(label16);
                 sheet.addCell(label4);
                 sheet.addCell(label5);
                 sheet.addCell(label6);
-                sheet.addCell(label7);
-                sheet.addCell(label8);
-                sheet.addCell(label9);
-                sheet.addCell(label10);
-                sheet.addCell(label11);
-                sheet.addCell(label12);
-                sheet.addCell(label13);
-                sheet.addCell(label14);
-                sheet.addCell(label15);
-                sheet.addCell(label16);
-                sheet.addCell(label17);
-                sheet.addCell(label18);
-                sheet.addCell(label19);
 
 
-                Toast.makeText(context, "t2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Excel Downloaded Successfully!!", Toast.LENGTH_SHORT).show();
             } catch (RowsExceededException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

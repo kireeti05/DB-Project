@@ -9,11 +9,15 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import com.example.kmc.Individual;
 
 import com.example.kmc.R;
 import com.example.kmc.login.Collector_Login;
 import com.example.kmc.login.SOLogin;
 import com.example.kmc.login.SPLogin;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PS_Action extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +25,8 @@ public class PS_Action extends AppCompatActivity implements View.OnClickListener
     String village;
     String district;
     String mandal;
+    int DbPending;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class PS_Action extends AppCompatActivity implements View.OnClickListener
         card3 = (CardView) findViewById(R.id.c3);
         card4 = (CardView) findViewById(R.id.c4);
         card5 = (CardView) findViewById(R.id.c5);
-
+        TextView t1=(TextView) findViewById(R.id.DbPending);
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
         card3.setOnClickListener(this);
@@ -48,6 +54,11 @@ public class PS_Action extends AppCompatActivity implements View.OnClickListener
 
         }else{
             Log.d("extra", "no");
+        }
+        Individual obj = new Individual();
+        
+        if(obj.getVillage().equals(village)&&obj.getStatus().equals("Sp Approved")) {
+            DbPending++;
         }
 
     }
