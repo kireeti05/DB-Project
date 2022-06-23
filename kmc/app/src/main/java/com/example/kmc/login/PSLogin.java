@@ -49,6 +49,7 @@ public class PSLogin extends AppCompatActivity {
                         i.putExtra("village",documentSnapshot.getString("village"));
                         i.putExtra("mandal",documentSnapshot.getString("mandal"));
                         i.putExtra("district",documentSnapshot.getString("district"));
+                        i.putExtra("uname",uname);
                         startActivity(i);
                         finish();
 
