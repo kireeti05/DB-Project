@@ -37,6 +37,7 @@ public class password_change extends AppCompatActivity {
     String mandal;
     String pass;
     String cnfPass;
+    String aadhar;
     public TextInputLayout password;
     public TextInputLayout cnfPassword;
     FirebaseFirestore db;
@@ -45,69 +46,75 @@ public class password_change extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_change);
-        db=FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         Bundle extras = getIntent().getExtras();
         password = (TextInputLayout) findViewById(R.id.pass);
         cnfPassword = (TextInputLayout) findViewById(R.id.cnfPass);
-        if(extras!=null){
+        if (extras != null) {
             String value = extras.getString("village");
-            village=value;
-            mandal=extras.getString("mandal");
-            district=extras.getString("district");
-            uname=extras.getString("uname");
-        }else{
+            village = value;
+            mandal = extras.getString("mandal");
+            district = extras.getString("district");
+            uname = extras.getString("uname");
+            aadhar = extras.getString("aadhar");
+        } else {
             Log.d("extra", "no");
         }
     }
 
     public void changePass(View view) {
-        if(password.equals(cnfPassword)){
-            pass = password.getEditText().getText().toString();
-            cnfPass = cnfPassword.getEditText().getText().toString();
-            if(pass.length()!=0 && cnfPass.length()!=0){
-                update(pass,uname);
-            }
-        }
-        else
+        pass = password.getEditText().getText().toString();
+        cnfPass = cnfPassword.getEditText().getText().toString();
+        Log.d("Pass", pass);
+        Log.d("PassCnf", cnfPass);
+        if (pass.equals(cnfPass)) {
+
+            Log.d("uname3", uname);
+            Log.d("aa1",aadhar);
+            update(pass, uname);
+        } else
             Toast.makeText(this, "Both Fields Are Not Same", Toast.LENGTH_LONG).show();
     }
 
-    public void update(String pass, String uname){
+    public void update(String pass, String uname) {
         Map<String, Object> individualInfo = new HashMap<String, Object>();
         individualInfo.put("password", pass);
-        db.collection("psofficer").document(uname)
+Log.d("aa",aadhar);
+        db.collection("psofficer").whereEqualTo("aadhar", aadhar)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful() && !task.getResult().isEmpty()){
-                            DocumentSnapshot documentSnapshot=task.getResult().getDocuments().get(0);
-                            String documentID=documentSnapshot.getId();
-                            db.collection("psofficer")
-                                    .document(uname)
-                                    .update(individualInfo)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    String documentID = documentSnapshot.getId();
+                    db.collection("psofficer")
+                            .document(documentID)
+                            .update(individualInfo)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
 
-                                            Toast.makeText(password_change.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                                            Intent i = new Intent(password_change.this, PS_Action.class);
-                                            i.putExtra("village",village.trim());
-                                            i.putExtra("mandal", mandal.trim());
-                                            i.putExtra("district",district.trim());
-                                            startActivity(i);
-                                            finish();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(password_change.this, "Error occured", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                        }else{
-                            Toast.makeText(password_change.this, "Failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(password_change.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(password_change.this, PS_Action.class);
+                                    i.putExtra("village", village.trim());
+                                    i.putExtra("mandal", mandal.trim());
+                                    i.putExtra("district", district.trim());
+                                    i.putExtra("uname", uname.trim());
+                                    i.putExtra("aadhar", aadhar.trim());
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(password_change.this, "Error occured", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    });
+
+                } else {
+                    Toast.makeText(password_change.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
