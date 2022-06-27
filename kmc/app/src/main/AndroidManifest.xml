@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kmc">
         <activity
+            android:name=".SOLogin.addVendor"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SOAddEdit"
+            android:exported="false" />
+        <activity
             android:name=".CLogin.change_password_ctr"
             android:exported="false" />
         <activity
