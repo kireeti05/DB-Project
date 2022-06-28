@@ -54,7 +54,6 @@ public class SOAddEdit extends AppCompatActivity {
                         List<DocumentSnapshot> list =queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot d:list)
                         {
-
                             Vendor obj=d.toObject(Vendor.class);
                             datalist.add(obj);
 
