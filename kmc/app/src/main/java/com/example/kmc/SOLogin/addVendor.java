@@ -56,7 +56,7 @@ public class addVendor extends AppCompatActivity {
          VendorsInfo.put("agencyName", agencyname.trim());
          VendorsInfo.put("vendorBankAcc", bankaccount.trim());
          VendorsInfo.put("vendorBankIFSC", bankifsc.trim());
-         VendorsInfo.put("vendorBankname", bankname.trim());
+         VendorsInfo.put("vendorBankName", bankname.trim());
          VendorsInfo.put("vendorName", vendorname.trim());
 
          db.collection("vendorAgency").add(VendorsInfo)
