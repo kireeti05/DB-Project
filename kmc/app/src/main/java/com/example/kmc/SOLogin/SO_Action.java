@@ -66,6 +66,7 @@ public class SO_Action extends AppCompatActivity implements View.OnClickListener
         }else{
             Log.d("extra", "no");
         }
+        pendingAction1=0;
         db.collection("individuals").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -90,6 +91,33 @@ public class SO_Action extends AppCompatActivity implements View.OnClickListener
                 });
 
     }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        pendingAction1=0;
+        db.collection("individuals").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> list =queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot d:list)
+                        {
+                            Individual obj=d.toObject(Individual.class);
+                            if(obj.getMandal().toLowerCase(Locale.ROOT).equals(mandal.toLowerCase(Locale.ROOT))) {
+                                if(obj.getSpApproved3().equals("yes")) {
+                                    if (obj.getPreferredUnit().toLowerCase(Locale.ROOT).equals(sector.toLowerCase(Locale.ROOT))) {
+                                        if(!obj.getSoApproved().equals("yes") &&  !obj.getSoApproved().equals("no"))
+                                        {
+                                            pendingAction1=pendingAction1+1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        pendingBadge1.setText(String.valueOf(pendingAction1));
+                    }
+                });
+    }
     public void changePass(View view) {
         Intent intent = new Intent(SO_Action.this, password_change_so.class);
         intent.putExtra("sector",sector);
@@ -108,7 +136,7 @@ public class SO_Action extends AppCompatActivity implements View.OnClickListener
 
         switch (v.getId()){
             case R.id.c1:
-                i = new Intent(this, SOAddEdit.class);
+                i = new Intent(this, SOListOfBen.class);
                 i.putExtra("mandal",mandal);
                 i.putExtra("sector",sector);
                 startActivity(i);

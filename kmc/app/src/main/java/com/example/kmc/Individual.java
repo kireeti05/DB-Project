@@ -48,6 +48,9 @@ public class Individual {
     String psApproved;
     String psApproved2;
     String psApproved3;
+    String occupation;
+    String rationcardnumber;
+    String option_selected;
 
     public String getSecOfficerUpload() {
         return secOfficerUpload;
@@ -67,7 +70,8 @@ public class Individual {
         this.psUpload = psUpload;
     }
 
-    public Individual(String grounding_img,String vendorName,String vendorAccountNo,String vendorIFSC,String groundingStatus,String bankIFSC,String approvalAmount,String secOfficerApproved,String name, String fatherName, String age, String houseNo, String aadhar, String phoneNo, String preferredUnit, String bankName, String bankAccNo, String psPDF, String spApproved, String village, String mandal, String district,String dbAccount,String sp_remarks,String so_remarks,String ctrApproved,String secOfficerUpload,String status,String individualAmountRequired,String spApproved2,String spAmountApproved,String psRequestedAmountToBeneficiary,String vendorAgency,String vendorBankName,String quotationImage, String DbBankName, String dbBankAccNo, String DbBankIFSC,String spApproved3,String soApproved,String so_quotation_amount,String ctrApproved2,String psApproved, String psApproved2, String psApproved3) {
+    public Individual(String option_selected, String grounding_img,String vendorName,String vendorAccountNo,String vendorIFSC,String groundingStatus,String bankIFSC,String approvalAmount,String secOfficerApproved,String name, String fatherName, String age, String houseNo, String aadhar, String phoneNo, String preferredUnit, String bankName, String bankAccNo, String psPDF, String spApproved, String village, String mandal, String district,String dbAccount,String sp_remarks,String so_remarks,String ctrApproved,String secOfficerUpload,String status,String individualAmountRequired,String spApproved2,String spAmountApproved,String psRequestedAmountToBeneficiary,String vendorAgency,String vendorBankName,String quotationImage, String DbBankName, String dbBankAccNo, String DbBankIFSC,String spApproved3,String soApproved,String so_quotation_amount,String ctrApproved2,String psApproved, String psApproved2, String psApproved3,String occupation,String rationcardnumber) {
+        this.option_selected = option_selected;
         this.name = name;
         this.fatherName = fatherName;
         this.age = age;
@@ -113,7 +117,13 @@ public class Individual {
         this.psApproved = psApproved;
         this.psApproved2 = psApproved2;
         this.psApproved3 = psApproved3;
+        this.occupation=occupation;
+        this.rationcardnumber=rationcardnumber;
 
+    }
+
+    public String getOption_selected() {
+        return option_selected;
     }
 
     public String getPsApproved() {
@@ -195,6 +205,7 @@ public class Individual {
     public void setDbBankIFSC(String dbBankIFSC) {
         DbBankIFSC = dbBankIFSC;
     }
+
 
     public String getVendorAgency() {
         return vendorAgency;
@@ -466,5 +477,21 @@ public class Individual {
 
     public void setBankAccNo(String bankAccNo) {
         this.bankAccNo = bankAccNo;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getRationcardnumber() {
+        return rationcardnumber;
+    }
+
+    public void setRationcardnumber(String rationcardnumber) {
+        this.rationcardnumber = rationcardnumber;
     }
 }
