@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:weightSum="1"
         tools:ignore="MissingConstraints">
-
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -24,6 +23,37 @@
             android:gravity="center"
             android:text="Special Officer"
             android:textColor="#fff"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addIndividual"
+            android:gravity="center"
+            android:onClick="generateNote"
+            android:text="Note"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_sticky_note_2_24"
+            android:textSize="20dp"
+            />
+<!--        <TextView-->
+<!--            android:id="@+id/title"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"-->
+<!--            android:paddingLeft="20dp"-->
+<!--            android:text="Special Officer"-->
+<!--            android:textColor="#fff" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/addIndividual"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="generateNote"-->
+<!--            android:text="+"-->
+<!--            android:textSize="30dp" />-->
+
 
 
     </LinearLayout>

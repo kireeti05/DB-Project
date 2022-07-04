@@ -233,9 +233,11 @@ public class SPUserDetailsAmountToDB extends AppCompatActivity {
         Map<String, Object> individualInfo = new HashMap<String, Object>();
         individualInfo.put("spApproved2", approved.trim());
         individualInfo.put("sp_remarks", spRemarks.trim());
+        individualInfo.put("ctrApproved", "");
         individualInfo.put("spAmountApproved", spApprovedAmount.trim());
         individualInfo.put("psApproved", psApproved);
         individualInfo.put("status", status);
+        individualInfo.put("ctrNote1", "");
         Toast.makeText(this, aadharNumber, Toast.LENGTH_SHORT).show();
         db.collection("individuals").whereEqualTo("aadhar",aadharNumber)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -133,6 +133,7 @@ public class userDetailsAmountDBtoBen extends AppCompatActivity {
                             agencies.add(obj.getAgencyName());
                         }
                         adapter.notifyDataSetChanged();
+                        option_selected = adapter.getItem(0);
                     }
 
                 });
@@ -296,6 +297,7 @@ public class userDetailsAmountDBtoBen extends AppCompatActivity {
             individualInfo.put("quotationImage", img_url.trim());
             individualInfo.put("psApproved2","yes");
             individualInfo.put("soApproved","yes");
+            individualInfo.put("spApproved3","");
             individualInfo.put("so_quotation_amount", appAmountToBen.trim());
 //            individualInfo.put("approvalAmountToBen",indDBAccount.trim());
 //        individualInfo.put("groundingStatus", groundingStatus);
@@ -352,7 +354,7 @@ public class userDetailsAmountDBtoBen extends AppCompatActivity {
             individualInfo.put("vendorIFSC", vendorBankIFSC.trim());
             individualInfo.put("vendorAgency", vendorAgency.trim());
             individualInfo.put("vendorBankName", vendorBankName.trim());
-            individualInfo.put("status", "Requesting for "+appAmountToBen.trim()+" to Beneficiary from DB Account.");
+            individualInfo.put("status", "Requesting for "+appAmountToBen.trim()+" to Beneficiary from DB Account. New Vendor Details were added.");
 
             individualInfo.put("psRequestedAmountToBeneficiary", appAmountToBen.trim());
             individualInfo.put("quotationImage", img_url.trim());

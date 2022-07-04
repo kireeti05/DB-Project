@@ -233,6 +233,14 @@
             <TextView
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:id="@+id/ctrMandalPending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Collector Pending:"
+                android:textColor="@color/colorPrimary"/>
+            <TextView
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,6 +263,14 @@
                     android:visibility="gone"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <TextView
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:id="@+id/ctrVillagePending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Collector Pending:"
+                android:textColor="@color/colorPrimary"/>
             <Button
                 android:id="@+id/approve"
                 android:layout_marginLeft="16dp"

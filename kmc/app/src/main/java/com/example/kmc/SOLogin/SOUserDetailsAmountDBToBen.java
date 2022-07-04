@@ -249,7 +249,7 @@ public class SOUserDetailsAmountDBToBen extends AppCompatActivity {
         String spApproved="yes";
         if(Integer.parseInt(getIntent().getStringExtra("uDbAccount").toString())>=Integer.parseInt(soQuoteAmount))
         {
-            status=soQuoteAmount+" approved by SO waiting for collector approval";
+            status=soQuoteAmount+" approved by SO waiting for SP approval";
             updateData(aadharNumber,approved,status,spApproved);
         }else{
             Toast.makeText(this, "Insuffient amount in DB Account.", Toast.LENGTH_SHORT).show();
@@ -275,6 +275,7 @@ public class SOUserDetailsAmountDBToBen extends AppCompatActivity {
             Map<String, Object> VendorsInfo = new HashMap<String, Object>();
 
             VendorsInfo.put("agencyName", agencyname.trim());
+            VendorsInfo.put("unit", preferredunit.trim());
             VendorsInfo.put("vendorBankAcc", bankaccount.trim());
             VendorsInfo.put("vendorBankIFSC", bankifsc.trim());
             VendorsInfo.put("vendorBankName", bankname.trim());
@@ -287,6 +288,8 @@ public class SOUserDetailsAmountDBToBen extends AppCompatActivity {
                             Toast.makeText(SOUserDetailsAmountDBToBen.this,"Vendor Details Added Successfully", Toast.LENGTH_SHORT);
                         }
                     });
+        }else{
+            individualInfo.put("psApproved2","");
         }
         individualInfo.put("status", status);
         Toast.makeText(this, aadharNumber, Toast.LENGTH_SHORT).show();

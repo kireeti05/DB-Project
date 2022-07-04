@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +34,7 @@ public class CollectorMenu extends AppCompatActivity {
     String selected_village;
     String selected_mandal;
     TextView mandal_pending;
+    TextView village_pending;
     TextView total_no_registered;
     TextView total_no_sanctioned;
     TextView total_no_released;
@@ -42,7 +45,8 @@ public class CollectorMenu extends AppCompatActivity {
     int total_released;
     int partially_g;
     int fully_g;
-    int c;
+    int ctrMandalPending;
+    int ctrVillagePending;
 
 
     @Override
@@ -54,6 +58,8 @@ public class CollectorMenu extends AppCompatActivity {
         total_no_released=(TextView) findViewById(R.id.t6);
         partially_grounded=(TextView) findViewById(R.id.t8);
         fully_grounded=(TextView) findViewById(R.id.t10);
+        mandal_pending=(TextView) findViewById(R.id.ctrMandalPending);
+        village_pending=(TextView) findViewById(R.id.ctrVillagePending);
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference subjectsRef = rootRef.collection("Khammam");
         Bundle extras = getIntent().getExtras();
@@ -84,15 +90,15 @@ public class CollectorMenu extends AppCompatActivity {
                         for(DocumentSnapshot d:list)
                         {
                             Individual obj=d.toObject(Individual.class);
-                            if(obj.getDbAccount()!="")
+                            if(obj.getSpApproved().equals("yes"))
                             {
                                 total_sanctioned=total_sanctioned+1;
                             }
-                            if(obj.getApprovalAmount()!="")
+                            if(!obj.getApprovalAmount().equals("0"))
                             {
                                 total_released=total_released+1;
                             }
-                            if(Integer.parseInt(obj.getApprovalAmount())<990000)
+                            if(Integer.parseInt(obj.getApprovalAmount())>0 && Integer.parseInt(obj.getApprovalAmount())<990000)
                             {
                                 partially_g=partially_g+1;
                             }
@@ -112,6 +118,7 @@ public class CollectorMenu extends AppCompatActivity {
                 });
 
 
+
         db.collection(district).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -120,20 +127,12 @@ public class CollectorMenu extends AppCompatActivity {
                         for(DocumentSnapshot d:list) {
 
                             District obj = d.toObject(District.class);
-                            c=0;
-                            obj.setUid(d.getId().toString());
-                            db.collection("individuals").whereEqualTo("mandal",obj.getUid()).whereEqualTo("ctrApproved2","").whereEqualTo("ctrApproved","").get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                c=queryDocumentSnapshots.size();
-                                                Log.d("Lenght",String.valueOf(c));
-                                        }
-                                    });
 
-                            mandals.add(obj.getUid()+" ("+c+")");
+                            obj.setUid(d.getId().toString());
+                            mandals.add(obj.getUid());
                         }
                         adapter.notifyDataSetChanged();
+                        selected_mandal=adapter.getItem(0);
                     }
 
                 });
@@ -144,7 +143,27 @@ public class CollectorMenu extends AppCompatActivity {
                 villages.clear();
                 spinnerVillage.setVisibility(View.VISIBLE);
                 spinnerMandal.setSelection(position);
-                selected_mandal = spinnerMandal.getSelectedItem().toString().split(" ")[0];
+                selected_mandal = spinnerMandal.getSelectedItem().toString();
+
+                db.collection("individuals").whereEqualTo("mandal",selected_mandal).get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                List<DocumentSnapshot> list =queryDocumentSnapshots.getDocuments();
+                                for(DocumentSnapshot d:list)
+                                {
+                                    Individual objCtrMP=d.toObject(Individual.class);
+                                    if((objCtrMP.getSpApproved2().equals("yes")||objCtrMP.getSpApproved3().equals("yes"))&&(objCtrMP.getCtrApproved().equals("")||objCtrMP.getCtrApproved2().equals("")))
+                                    {
+                                        ctrMandalPending=ctrMandalPending+1;
+                                    }
+
+                                }
+                                mandal_pending.setText("Collector Pending in "+selected_mandal+" "+ctrMandalPending);
+                                ctrMandalPending=0;
+                            }
+                        });
+
 
                 db.collection(district).document(selected_mandal).collection("villages").get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -156,6 +175,23 @@ public class CollectorMenu extends AppCompatActivity {
                                     villages.add(obj.getVillage());
                                 }
                                 adapter2.notifyDataSetChanged();
+                                selected_village=adapter2.getItem(0);
+                                db.collection("individuals").whereEqualTo("village",selected_village).get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                List<DocumentSnapshot> list =queryDocumentSnapshots.getDocuments();
+                                                for(DocumentSnapshot d:list)
+                                                {
+                                                    Individual objCtrVP=d.toObject(Individual.class);
+                                                    if((objCtrVP.getSpApproved2().equals("yes")||objCtrVP.getSpApproved3().equals("yes"))&&(objCtrVP.getCtrApproved().equals("")||objCtrVP.getCtrApproved2().equals(""))) {
+                                                        ctrVillagePending= ctrVillagePending + 1;
+                                                    }
+                                                }
+                                                village_pending.setText("Collector Pending in "+selected_village+" "+ctrVillagePending);
+                                                ctrVillagePending=0;
+                                            }
+                                        });
                             }
                         });
             }
@@ -173,6 +209,22 @@ public class CollectorMenu extends AppCompatActivity {
 
                 spinnerVillage.setSelection(position);
                 selected_village = spinnerVillage.getSelectedItem().toString();
+                db.collection("individuals").whereEqualTo("village",selected_village).get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                List<DocumentSnapshot> list =queryDocumentSnapshots.getDocuments();
+                                for(DocumentSnapshot d:list)
+                                {
+                                    Individual objCtrVP=d.toObject(Individual.class);
+                                    if((objCtrVP.getSpApproved2().equals("yes")||objCtrVP.getSpApproved3().equals("yes"))&&(objCtrVP.getCtrApproved().equals("")||objCtrVP.getCtrApproved2().equals(""))) {
+                                        ctrVillagePending= ctrVillagePending + 1;
+                                    }
+                                }
+                                village_pending.setText("Collector Pending in "+selected_village+" "+ctrVillagePending);
+                                ctrVillagePending=0;
+                            }
+                        });
             }
 
             @Override
