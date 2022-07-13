@@ -37,11 +37,12 @@
                         android:text="Total No Registered:"
                         android:textColor="#FFF"
                         android:textSize="15dp" />
+
                     <TextView
                         android:id="@+id/t2"
-                        android:layout_below="@+id/t1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/t1"
                         android:layout_centerHorizontal="true"
                         android:text=""
                         android:textColor="#FFF"
@@ -140,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
 
-                    android:background="#0198E1"
+                    android:background="#006400"
                     >
 
 
@@ -166,48 +167,58 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--            <Button-->
+<!--                android:id="@+id/pendencyReport"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:layout_marginRight="16dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Pendency Report"-->
+<!--                android:onClick="pendency"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:gravity="center"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                />-->
+            <Button
+                android:id="@+id/overviewid"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                app:cardCornerRadius="10dp"
-                android:elevation="4dp"
-                app:cardUseCompatPadding="true">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-
-                    android:background="#006400"
-                    >
-
-
-                    <TextView
-                        android:id="@+id/t9"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Total No Fully Grounded:"
-                        android:textColor="#FFF"
-                        android:textSize="15dp" />
-                    <TextView
-                        android:id="@+id/t10"
-                        android:layout_below="@+id/t9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text=""
-                        android:textColor="#FFF"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                android:text="Overview"
+                android:layout_below="@id/password"
+                android:onClick="overview"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                style="?attr/materialButtonOutlinedStyle"
+                />
             <TextView
                 android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Constituency"/>
+            <LinearLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="8"
+                android:orientation="horizontal"
+                android:background="@drawable/border"
+                tools:ignore="UselessParent">
+
+                <Spinner
+                    android:id="@+id/spinner_constituency"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:paddingLeft="16dp"
+                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select Mandal"/>
@@ -230,14 +241,7 @@
                     android:autofillHints="Mandal"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-            <TextView
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:id="@+id/ctrMandalPending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Collector Pending:"
-                android:textColor="@color/colorPrimary"/>
+<!---->
             <TextView
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -263,14 +267,8 @@
                     android:visibility="gone"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <TextView
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:id="@+id/ctrVillagePending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Collector Pending:"
-                android:textColor="@color/colorPrimary"/>
+
+
             <Button
                 android:id="@+id/approve"
                 android:layout_marginLeft="16dp"

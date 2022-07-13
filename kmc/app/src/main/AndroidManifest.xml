@@ -16,6 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kmc">
         <activity
+            android:name=".CLogin.CollectorVillageOverview"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorMandalOverview"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorConstituencyOverview"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorDistrictOverview"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.MandalPending"
+            android:exported="false" />
+        <activity
             android:name=".CLogin.CollectorMenu"
             android:exported="false" />
         <activity
@@ -182,6 +197,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
         </activity>
     </application>
 
