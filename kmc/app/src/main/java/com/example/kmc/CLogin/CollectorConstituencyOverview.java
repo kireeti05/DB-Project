@@ -1,7 +1,6 @@
 package com.example.kmc.CLogin;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -44,22 +42,24 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+
 public class CollectorConstituencyOverview extends AppCompatActivity {
 
     public Toolbar toolbar;
     RecyclerView recyclerView;
 
     ArrayList<MandalElements> datalist;
+    List<DocumentSnapshot> list;
+    Individual obj;
     FirebaseFirestore db;
     String district;
-    Individual obj;
-    List<DocumentSnapshot> list;
     ProgressBar progressBar;
     int totalRegistered;
     int totalSelected;
-    int totalApprovedAmount;
-    int dbAccountAmount;
+    double totalApprovedAmount;
+    double dbAccountAmount;
     int grounding;
+    double totalDbAmount;
 
     myadapterConstituencyOverView adapter;
     @Override
@@ -78,7 +78,6 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
         db=FirebaseFirestore.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-
         db.collection(district+"_constituencies").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -101,6 +100,7 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
                                                 {
                                                     totalSelected=totalSelected+1;
                                                 }
+                                                totalDbAmount = totalDbAmount+Integer.parseInt(obj2.getApprovalAmount())+Integer.parseInt(obj2.getDbAccount());
                                                 totalApprovedAmount=totalApprovedAmount+Integer.parseInt(obj2.getApprovalAmount());
                                                 dbAccountAmount=dbAccountAmount+Integer.parseInt(obj2.getDbAccount());
                                                 if(obj2.getGroundingStatus().equals("yes")||Integer.parseInt(obj2.getApprovalAmount())>=990000)
@@ -108,7 +108,7 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
                                                     grounding=grounding+1;
                                                 }
                                             }
-                                            MandalElements ob=new MandalElements(obj.getUid(),String.valueOf(totalRegistered),String.valueOf(totalSelected),String.valueOf(totalApprovedAmount),String.valueOf(dbAccountAmount),String.valueOf(grounding));
+                                            MandalElements ob=new MandalElements(obj.getUid(),String.valueOf(totalRegistered),String.valueOf(totalSelected),String.valueOf(totalApprovedAmount/100000.0),String.valueOf(dbAccountAmount/100000.0),String.valueOf(grounding),String.valueOf(totalDbAmount/100000.0));
                                             datalist.add(ob);
                                             adapter.notifyDataSetChanged();
                                             totalRegistered=0;
@@ -116,11 +116,15 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
                                             totalApprovedAmount=0;
                                             dbAccountAmount=0;
                                             grounding=0;
+                                            totalDbAmount = 0;
 
                                         }
                                     });
+
                         }
+
                         progressBar.setVisibility(View.GONE);
+
                     }
 
                 });
@@ -139,7 +143,6 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
         setActionBar(toolbar);
 
     }
-
     public void generateXL(View view) throws IOException {
         getPermission();
 
@@ -194,19 +197,19 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
             int i=1;
             for(DocumentSnapshot d:list) {
                 obj = d.toObject(Individual.class);
-                    if (obj.getSpApproved().equals("yes")){
-                        Label name = new Label(0,i,obj.getName());
-                        sheet.addCell(name);
+                if (obj.getSpApproved().equals("yes")){
+                    Label name = new Label(0,i,obj.getName());
+                    sheet.addCell(name);
 //                        Label fname = new Label(1,i,obj.getFatherName());
 //                        sheet.addCell(fname);
 //                        Label  aadhar= new Label(2,i,obj.getAadhar());
 //                        sheet.addCell(aadhar);
-                        Label village = new Label(1,i,obj.getVillage());
-                        sheet.addCell(village);
-                        Label mandal = new Label(2,i,obj.getMandal());
-                        sheet.addCell(mandal);
-                        Label unit = new Label(3,i,obj.getPreferredUnit());
-                        sheet.addCell(unit);
+                    Label village = new Label(1,i,obj.getVillage());
+                    sheet.addCell(village);
+                    Label mandal = new Label(2,i,obj.getMandal());
+                    sheet.addCell(mandal);
+                    Label unit = new Label(3,i,obj.getPreferredUnit());
+                    sheet.addCell(unit);
 //                        Label bname = new Label(6,i,obj.getBankName());
 //                        sheet.addCell(bname);
 //                        Label bacc = new Label(7,i,obj.getBankAccNo());
@@ -229,14 +232,14 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
 //                        sheet.addCell(dbAccount);
 //                        Label dbIFSC = new Label(16,i,obj.getDbBankIFSC());
 //                        sheet.addCell(dbIFSC);
-                        Label gStatus = new Label(4,i,obj.getGroundingStatus());
-                        sheet.addCell(gStatus);
-                        Label aAmount = new Label(5,i,obj.getApprovalAmount());
-                        sheet.addCell(aAmount);
-                        Label dbAmount = new Label(6,i,obj.getDbAccount());
-                        sheet.addCell(dbAmount);
-                        i++;
-                    }
+                    Label gStatus = new Label(4,i,obj.getGroundingStatus());
+                    sheet.addCell(gStatus);
+                    Label aAmount = new Label(5,i,obj.getApprovalAmount());
+                    sheet.addCell(aAmount);
+                    Label dbAmount = new Label(6,i,obj.getDbAccount());
+                    sheet.addCell(dbAmount);
+                    i++;
+                }
 
             }
 
@@ -308,7 +311,7 @@ public class CollectorConstituencyOverview extends AppCompatActivity {
         // location = "/sdcard/my_folder";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri mydir = Uri.parse("file://"+location);
-        intent.setDataAndType(mydir,"application/*");    // or use */*
+        intent.setDataAndType(mydir,"application/");    // or use */
         startActivity(intent);
     }
 }

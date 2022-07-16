@@ -16,6 +16,63 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kmc">
         <activity
+            android:name=".SOLogin.SoGroundingSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SoAmountDbtoBenSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SOLogin.SoAddEditSearch"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PsAddEditSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SpGroundingSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SpDbToBenSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SpAmountToDbSearch"
+            android:exported="false" />
+        <activity
+            android:name=".SPLogin.SpListOfBenSearch"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSSearchGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorSearchGrounding"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorSearchAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorSearchAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSSearchAmountDBToBen"
+            android:exported="false" />
+        <activity
+            android:name=".PSLogin.PSSearchAmountToDB"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.VillageDemo"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.MandalDemo"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.Demo"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.CollectorSearch"
+            android:exported="false" />
+        <activity
+            android:name=".CLogin.Reports"
+            android:exported="false" />
+        <activity
             android:name=".CLogin.CollectorVillageOverview"
             android:exported="false" />
         <activity
@@ -197,9 +254,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
+                android:resource="@xml/shortcuts" />
         </activity>
     </application>
 

@@ -1,6 +1,29 @@
 package com.example.kmc.CLogin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toolbar;
+
+import com.example.kmc.COverview.myadapterMandalOverView;
+import com.example.kmc.COverview.myadapterVillageOverview;
+import com.example.kmc.District;
+import com.example.kmc.Individual;
+import com.example.kmc.MandalElements;
+import com.example.kmc.Mandals;
+import com.example.kmc.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,16 +73,17 @@ public class CollectorVillageOverview extends AppCompatActivity {
 
     ArrayList<MandalElements> datalist;
     Individual obj;
+    List<DocumentSnapshot> list;
     FirebaseFirestore db;
     String district;
     String mandal;
     ProgressBar progressBar;
-    List<DocumentSnapshot> list;
     int totalRegistered;
     int totalSelected;
-    int totalApprovedAmount;
-    int dbAccountAmount;
+    double totalApprovedAmount;
+    double dbAccountAmount;
     int grounding;
+    double totalDbAmount;
 
 
 
@@ -105,6 +129,7 @@ public class CollectorVillageOverview extends AppCompatActivity {
                                                 {
                                                     totalSelected=totalSelected+1;
                                                 }
+                                                totalDbAmount = totalDbAmount+Integer.parseInt(obj2.getApprovalAmount())+Integer.parseInt(obj2.getDbAccount());
                                                 totalApprovedAmount=totalApprovedAmount+Integer.parseInt(obj2.getApprovalAmount());
                                                 dbAccountAmount=dbAccountAmount+Integer.parseInt(obj2.getDbAccount());
                                                 if(obj2.getGroundingStatus().equals("yes")||Integer.parseInt(obj2.getApprovalAmount())>=990000)
@@ -112,7 +137,7 @@ public class CollectorVillageOverview extends AppCompatActivity {
                                                     grounding=grounding+1;
                                                 }
                                             }
-                                            MandalElements ob=new MandalElements(obj.getVillage(),String.valueOf(totalRegistered),String.valueOf(totalSelected),String.valueOf(totalApprovedAmount),String.valueOf(dbAccountAmount),String.valueOf(grounding));
+                                            MandalElements ob=new MandalElements(obj.getVillage(),String.valueOf(totalRegistered),String.valueOf(totalSelected),String.valueOf(totalApprovedAmount/100000.0),String.valueOf(dbAccountAmount/100000.0),String.valueOf(grounding), String.valueOf(totalDbAmount/100000.0));
                                             datalist.add(ob);
                                             adapter.notifyDataSetChanged();
                                             totalRegistered=0;
@@ -120,6 +145,7 @@ public class CollectorVillageOverview extends AppCompatActivity {
                                             totalApprovedAmount=0;
                                             dbAccountAmount=0;
                                             grounding=0;
+                                            totalDbAmount = 0;
 
                                         }
 
@@ -144,7 +170,6 @@ public class CollectorVillageOverview extends AppCompatActivity {
         setActionBar(toolbar);
 
     }
-
     public void generateXL(View view) throws IOException {
         getPermission();
 
@@ -316,8 +341,7 @@ public class CollectorVillageOverview extends AppCompatActivity {
         // location = "/sdcard/my_folder";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri mydir = Uri.parse("file://"+location);
-        intent.setDataAndType(mydir,"application/*");    // or use */*
+        intent.setDataAndType(mydir,"application/");    // or use */
         startActivity(intent);
     }
-
 }

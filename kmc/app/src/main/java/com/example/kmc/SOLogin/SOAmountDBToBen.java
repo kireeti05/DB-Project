@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
@@ -68,7 +70,7 @@ public class SOAmountDBToBen extends AppCompatActivity {
                         {
                             Individual obj=d.toObject(Individual.class);
                             if(obj.getMandal().toLowerCase(Locale.ROOT).equals(mandal.toLowerCase(Locale.ROOT))) {
-                                if(obj.getSpApproved3().equals("yes") && obj.getPreferredUnit().equals(sector)) {
+                                if(obj.getSpApproved3().equals("yes") && obj.getPreferredUnit().equalsIgnoreCase(sector)) {
                                     if (obj.getPreferredUnit().toLowerCase(Locale.ROOT).equals(sector.toLowerCase(Locale.ROOT))) {
                                         if(!obj.getSoApproved().equals("yes") &&  !obj.getSoApproved().equals("no"))
                                         {
@@ -87,5 +89,11 @@ public class SOAmountDBToBen extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
 
+    }
+    public void search(View view) {
+        Intent i = new Intent(this, SoAmountDbtoBenSearch.class);
+        i.putExtra("mandal",mandal);
+        i.putExtra("sector",sector);
+        startActivity(i);
     }
 }

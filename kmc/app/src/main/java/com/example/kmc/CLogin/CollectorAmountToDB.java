@@ -21,6 +21,7 @@ import android.widget.Toolbar;
 import com.example.kmc.CollectorAdapters.myadapter4;
 import com.example.kmc.CollectorAdapters.myadapter4Collector2;
 import com.example.kmc.Individual;
+import com.example.kmc.NoteElements;
 import com.example.kmc.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class CollectorAmountToDB extends AppCompatActivity {
 
@@ -55,23 +58,29 @@ public class CollectorAmountToDB extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ArrayList<Individual> datalist;
-    ArrayList<Individual> datalist2;
     FirebaseFirestore db;
     String village;
+    ArrayList<NoteElements> ne;
     ProgressBar progressBar;
     List<DocumentSnapshot> list;
     Individual obj;
     Individual obj2;
-
-
+    int totalAmount;
+    int noOfBen;
+    String mandal;
+    String today;
     myadapter4Collector2 adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collectorzone);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+        today = formatter.format(date);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         datalist=new ArrayList<>();
+        ne=new ArrayList<>();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             village= extras.getString("village");
@@ -113,6 +122,8 @@ public class CollectorAmountToDB extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> list2 =queryDocumentSnapshots.getDocuments();
+                        totalAmount=0;
+                        noOfBen=0;
                         for(DocumentSnapshot d:list2)
                         {
                             obj2=d.toObject(Individual.class);
@@ -121,13 +132,19 @@ public class CollectorAmountToDB extends AppCompatActivity {
                                     if(!obj2.getCtrNote1().equals("yes"))
                                     {
                                         updateData(obj2.getAadhar());
+                                        totalAmount=totalAmount+Integer.parseInt(obj2.getDbAccount());
+                                        noOfBen=noOfBen+1;
                                     }
                                 }
                             }
                         }
+                        Log.d("DBen", totalAmount+" "+noOfBen);
+                        NoteElements n=new NoteElements(totalAmount,noOfBen);
+                        ne.add(n);
+                        createPDF();
                     }
                 });
-        createPDF();
+
         Toast.makeText(this, "Note Generated Successfully", Toast.LENGTH_SHORT).show();
 
     }
@@ -163,6 +180,7 @@ public class CollectorAmountToDB extends AppCompatActivity {
         });
     }
     public void createPDF() {
+
         Document doc = new Document();
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
         {
@@ -180,10 +198,9 @@ public class CollectorAmountToDB extends AppCompatActivity {
 
         try {
 
-            Log.d("PDFCreator", "PDF Path: " + dir);
 
             //This is for random name
-            String number="VillageNote"+System.currentTimeMillis();
+            String number="VillageNote1"+System.currentTimeMillis();
 
             File file = new File(dir, "Document" + number + ".pdf");
             FileOutputStream fOut = new FileOutputStream(file);
@@ -214,7 +231,7 @@ public class CollectorAmountToDB extends AppCompatActivity {
             p4.setFont(paraFont);
             //add paragraph to document
 
-            Paragraph p5 = new Paragraph("Rc.No.E/298/SC/2021-DB-3\t ;Date:-    .0 .20  ..");
+            Paragraph p5 = new Paragraph("Rc.No.E/298/SC/2021-DB-3\t ;Date:- "+today);
             p5.setAlignment(Paragraph.ALIGN_CENTER);
             p5.setFont(paraFont);
             //add paragraph to document
@@ -225,19 +242,28 @@ public class CollectorAmountToDB extends AppCompatActivity {
             p7.setFont(paraFont);
             //add paragraph to document
             doc.add(p7);
-
             doc.add(p4);
+            Paragraph p26 = new Paragraph("Sri.");
+            p26.setAlignment(Paragraph.ALIGN_LEFT);
+            p26.setFont(paraFont);
+            //add paragraph to document
+            doc.add(p26);
+            Paragraph p27 = new Paragraph("Manager, "+
+                    "District Collector & Chairman  \n"+
+                    "DSCSCDS Ltd,\n"+
+                    "Khammam.\n");
+            p27.setAlignment(Paragraph.ALIGN_LEFT);
+            p27.setFont(paraFont);
+            //add paragraph to document
+            doc.add(p27);
             doc.add(p4);
-            doc.add(p4);
-            doc.add(p4);
-
             Paragraph p8 = new Paragraph("Sir,");
             p8.setAlignment(Paragraph.ALIGN_LEFT);
             p8.setFont(paraFont);
             //add paragraph to document
             doc.add(p8);
 
-            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – Chinthakani Mandal  –-  Transfer for an amounts of Rs.               /- to Vendor Account of (  ) beneficiaries pertains to                  Unit  – Reg.");
+            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – "+village+"  –-  Transfer for an amounts of Rs."+ne.get(0).getTotalAmount()+"/- to beneficiary Account of "+ne.get(0).getNoOfBen()+" beneficiaries pertains to their preferred units – Reg.");
             p9.setAlignment(Paragraph.ALIGN_CENTER);
             p9.setFont(paraFont);
             //add paragraph to document
@@ -248,25 +274,25 @@ public class CollectorAmountToDB extends AppCompatActivity {
             p10.setFont(paraFont);
             //add paragraph to document
             doc.add(p10);
-            Paragraph p11 = new Paragraph("1\tProgs of the District Collector & Chairman, DSCSCDS Ltd., KhammamRc.No. E/298/SC/2021, Dated: 03.04.2022.");
+            Paragraph p11 = new Paragraph("1.\tProgs of the District Collector & Chairman, DSCSCDS Ltd., Khammam Rc.No. E/298/SC/2021, Dated: "+today);
             p11.setAlignment(Paragraph.ALIGN_LEFT);
             p11.setFont(paraFont);
             //add paragraph to document
             doc.add(p11);
-            Paragraph p12 = new Paragraph("2\tBeneficiaries individual acceptancy letters duly recommended by the Panchayat Secretary, MPDO and  Special Officers of Concerned G Ps/");
+            Paragraph p12 = new Paragraph("2.\tBeneficiaries individual acceptancy letters duly recommended by the Panchayat Secretary, MPDO and  Special Officers of Concerned G.Ps/");
             p12.setAlignment(Paragraph.ALIGN_LEFT);
             p12.setFont(paraFont);
             //add paragraph to document
             doc.add(p12);
 
-            Paragraph p13 = new Paragraph("3\tThis office Lr.Rc.No. E/298/SC/2022, Dated:          addressed to the Branch Managers of Banks concerned.");
+            Paragraph p13 = new Paragraph("3.\tThis office Lr.Rc.No. E/298/SC/2022, Dated: "+today+" addressed to the Branch Managers of Banks concerned.");
             p13.setAlignment(Paragraph.ALIGN_LEFT);
             p13.setFont(paraFont);
             //add paragraph to document
             doc.add(p13);
             Paragraph p14 = new Paragraph(
-                    "4\tInstructions of District Collector & Chairman, DSCSCDS Ltd., Khammam.\n"+
-                    "5\tLr.Rc.No.DB/                   /    , dt:-.            of D.P.M, KMM \n");
+                    "4.\tInstructions of District Collector & Chairman, DSCSCDS Ltd., Khammam.\n"+
+                    "5.\tLr.Rc.No.E/298/SE/                   /, dt:-. "+today+" of D.P.M, KMM \n");
             p14.setAlignment(Paragraph.ALIGN_LEFT);
             p14.setFont(paraFont);
             //add paragraph to document
@@ -278,13 +304,13 @@ public class CollectorAmountToDB extends AppCompatActivity {
             //add paragraph to document
             doc.add(p15);
             Paragraph p16 = new Paragraph(
-                    "      Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from                Mandal and sanctioned Rs. 10.00 Lakh per each beneficiary for the said purpose vide the proceedings under reference 1st cited. Further, it is to submit that, previously              have been credited to the account of         beneficiaries.Further it is submitted that for      beneficiaries initial amount                   has been not released and not credited. Hence, initial amount                  each is hereby released for       beneficiaries.Further, an amount of RS                  (Rupees                                                                            Only) of        beneficiaries are hereby released  to Vendor account pertains to                         unit under Dalit Bandhu Scheme.");
+                    "Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from "+village+" and sanctioned Rs. 10.00 Lakh per each beneficiary for the said purpose vide the proceedings under reference 1st cited.Further it is submitted that an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries is hereby released to their Dalit Bandhu beneficiaries account pertains to their preferred units under Dalit Bandhu Scheme.");
             p16.setAlignment(Paragraph.ALIGN_LEFT);
             p16.setFont(paraFont);
             //add paragraph to document
             doc.add(p16);
             Paragraph p17 = new Paragraph(
-                    "     Therefore, the  Manager concerned are requested to release and transfer amount of Rs.                  (Rupees                                                                                Only) of       beneficiaries from Dalit Bandhu Beneficiary account to vendor account as  furnished at Colm No.       of the Annexure. ");
+                    "Therefore, the  Manager,                concerned are requested to release and transfer amounts to Dalit Bandhu beneficiaries accounts for an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries furnished at Colm No. (4) of the Annexure.");
             p17.setAlignment(Paragraph.ALIGN_LEFT);
             p17.setFont(paraFont);
             //add paragraph to document
@@ -358,12 +384,26 @@ public class CollectorAmountToDB extends AppCompatActivity {
                         }
                     }
                 }
-
-
-
             }
 
             doc.add(userTable);
+
+            doc.add(p4);
+            doc.add(p4);
+            doc.add(p4);
+            Paragraph p24 = new Paragraph(
+                    "\n" +
+                            "District Collector & Chairman,\n");
+            p24.setAlignment(Paragraph.ALIGN_RIGHT);
+            p24.setFont(paraFont);
+            //add paragraph to document
+            doc.add(p24);
+            Paragraph p25 = new Paragraph(
+                    "DSCSCDS Ltd., Khammam\n");
+            p25.setAlignment(Paragraph.ALIGN_RIGHT);
+            p25.setFont(paraFont);
+            //add paragraph to document
+            doc.add(p25);
 
             Phrase footerText = new Phrase("Khammam District Administration App");
             HeaderFooter pdfFooter = new HeaderFooter(footerText, true);
@@ -371,6 +411,8 @@ public class CollectorAmountToDB extends AppCompatActivity {
 
 //            Toast.makeText(getApplicationContext(), "success pdf", Toast
 //                    .LENGTH_LONG).show();
+
+
 
         } catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de);
@@ -380,5 +422,10 @@ public class CollectorAmountToDB extends AppCompatActivity {
             doc.close();
         }
 
+    }
+    public void search(View view) {
+        Intent i = new Intent(this, CollectorSearchAmountToDB.class);
+        i.putExtra("village",village);
+        startActivity(i);
     }
 }

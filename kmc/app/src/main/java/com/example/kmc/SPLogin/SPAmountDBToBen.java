@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -67,7 +68,7 @@ public class SPAmountDBToBen extends AppCompatActivity {
                         {
 
                             Individual obj=d.toObject(Individual.class);
-                            if(!obj.getPsApprovedAmount().equals("") && obj.getSoApproved().equals("yes"))
+                            if(!obj.getPsApprovedAmount().equals("NA") && obj.getSoApproved().equals("yes"))
                             {
                                 if(obj.getVillage().toLowerCase(Locale.ROOT).equals(village1.toLowerCase(Locale.ROOT)) || (obj.getVillage().toLowerCase(Locale.ROOT).equals(village2.toLowerCase(Locale.ROOT))) ){
                                     if(!obj.getSpApproved3().equals("yes") &&  !obj.getSpApproved3().equals("no"))
@@ -84,7 +85,11 @@ public class SPAmountDBToBen extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
-
-
+    }
+    public void search(View view) {
+        Intent i = new Intent(this, SpDbToBenSearch.class);
+        i.putExtra("village1",village1);
+        i.putExtra("village2",village2);
+        startActivity(i);
     }
 }

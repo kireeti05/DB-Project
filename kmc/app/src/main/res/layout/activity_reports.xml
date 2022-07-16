@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CLogin.Reports">
+    <include
+        layout="@layout/appbar"/>
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:paddingLeft="20dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="District Overview"
+            android:textColor="#fff"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/DistrictUnitReport"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="District Unit Report"
+            android:layout_below="@id/password"
+            android:onClick="DistrictUnitReport"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Constituency"/>
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="8"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            tools:ignore="UselessParent">
+
+            <Spinner
+                android:id="@+id/spinner_constituency"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/unitReport"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Constituency UNIT Report"
+            android:layout_below="@id/password"
+            android:onClick="unitReport"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Mandal"/>
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="8"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            tools:ignore="UselessParent">
+
+            <Spinner
+                android:id="@+id/spinner_mandal"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/MandalunitReport"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mandal UNIT Report"
+            android:layout_below="@id/password"
+            android:onClick="mandalUnitReport"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Village"/>
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="8"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            tools:ignore="UselessParent">
+
+            <Spinner
+                android:id="@+id/spinner_village"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/VillageunitReport"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Village UNIT Report"
+            android:layout_below="@id/password"
+            android:onClick="villageUnitReport"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/spReport"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Special officer pending Report"
+            android:layout_below="@id/password"
+            android:onClick="spReport"
+            android:gravity="center"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

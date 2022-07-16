@@ -149,7 +149,7 @@ public class CollectorMenu extends AppCompatActivity {
                                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                                             for (DocumentSnapshot d : list) {
                                                 Individual objCtrMP = d.toObject(Individual.class);
-                                                if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals(""))) {
+                                                if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("NA")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals("NA"))) {
                                                     ctrConstituencyPending = ctrConstituencyPending + 1;
                                                 }
                                               }
@@ -187,7 +187,7 @@ public class CollectorMenu extends AppCompatActivity {
                                                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                                                     for (DocumentSnapshot d : list) {
                                                         Individual objCtrMP = d.toObject(Individual.class);
-                                                        if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals(""))) {
+                                                        if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("NA")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals("NA"))) {
                                                             ctrMandalPending = ctrMandalPending + 1;
                                                         }
                                                     }
@@ -235,7 +235,7 @@ public class CollectorMenu extends AppCompatActivity {
                                                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                                                     for (DocumentSnapshot d : list) {
                                                         Individual objCtrMP = d.toObject(Individual.class);
-                                                        if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals(""))) {
+                                                        if ((objCtrMP.getSpApproved2().equals("yes") && objCtrMP.getCtrApproved().equals("NA")) || (objCtrMP.getSpApproved3().equals("yes") && objCtrMP.getCtrApproved2().equals("NA"))) {
                                                             ctrVillagePending = ctrVillagePending + 1;
 //                                                           final String ctr=String.valueOf(ctrMandalPending);
 //                                                            Log.d("HELLO",ctr);
@@ -293,11 +293,17 @@ public class CollectorMenu extends AppCompatActivity {
     public void next(View view) {
         Intent i = new Intent(this, CollectorAction.class);
         i.putExtra("village",selected_village.substring(0,selected_village.indexOf(" ")));
+        i.putExtra("district",district);
         startActivity(i);
     }
 
     public void overview(View view) {
         Intent i = new Intent(this, CollectorDistrictOverview.class);
+        i.putExtra("district",district);
+        startActivity(i);
+    }
+    public void reports(View view) {
+        Intent i = new Intent(this, Reports.class);
         i.putExtra("district",district);
         startActivity(i);
     }

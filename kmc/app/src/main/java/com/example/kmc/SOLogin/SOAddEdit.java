@@ -15,6 +15,7 @@ import com.example.kmc.Individual;
 import com.example.kmc.R;
 import com.example.kmc.PSAdapters.myadapter;
 import com.example.kmc.SOAdapters.vendorAdapter;
+import com.example.kmc.SPLogin.SpGroundingSearch;
 import com.example.kmc.Vendor;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -88,6 +89,12 @@ public class SOAddEdit extends AppCompatActivity {
 //        startActivity(intent);
 //        finish();
         Intent i = new Intent(SOAddEdit.this, addVendor.class);
+        i.putExtra("mandal",mandal);
+        i.putExtra("sector",sector);
+        startActivity(i);
+    }
+    public void search(View view) {
+        Intent i = new Intent(this, SoAddEditSearch.class);
         i.putExtra("mandal",mandal);
         i.putExtra("sector",sector);
         startActivity(i);
