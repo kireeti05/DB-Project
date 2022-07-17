@@ -257,7 +257,7 @@ public class addIndividual extends AppCompatActivity {
         //
         if (individualName.length() != 0 && fatherName.length() != 0 && age.length() != 0 && houseNumber.length() != 0 && aadharNumber.length() != 0 && mobileNumber.length() != 0 && option_selected.length() != 0 && bankName.length() != 0 && bankACCNumber.length() != 0 && dbBankName.length() != 0 && dbBankACCNumber.length() != 0 && dbBankIFSC.length() != 0 ) {
             Map<String, Object> individualInfo = new HashMap<String, Object>();
-            individualInfo.put("name", individualName.trim());
+            individualInfo.put("name", individualName.toLowerCase().trim());
             individualInfo.put("fatherName", fatherName.trim());
             individualInfo.put("age", age.trim());
             individualInfo.put("houseNo", houseNumber.trim());

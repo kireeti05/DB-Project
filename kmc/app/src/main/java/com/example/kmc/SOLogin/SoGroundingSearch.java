@@ -69,14 +69,14 @@ public class SoGroundingSearch extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                searchText=searchBox.getText().toString();
+                searchText=searchBox.getText().toString().toLowerCase();
             }
         });
 
     }
     public void searchbutton(View view) {
         progressBar.setVisibility(View.VISIBLE);
-        db.collection("individuals").get()
+        db.collection("individuals").orderBy("name".toLowerCase(Locale.ROOT)).startAt(searchText).endAt(searchText+"\uf8ff").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

@@ -70,7 +70,7 @@ public class SoAmountDbtoBenSearch extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                searchText=searchBox.getText().toString();
+                searchText=searchBox.getText().toString().toLowerCase();
             }
         });
 
