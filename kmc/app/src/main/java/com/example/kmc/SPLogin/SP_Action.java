@@ -85,8 +85,8 @@ public class SP_Action extends AppCompatActivity implements View.OnClickListener
                         for(DocumentSnapshot d:list)
                         {
                             Individual obj=d.toObject(Individual.class);
-                            if(obj.getVillage().toLowerCase(Locale.ROOT).equals(village1.toLowerCase(Locale.ROOT)) || (obj.getVillage().toLowerCase(Locale.ROOT).equals(village2.toLowerCase(Locale.ROOT))) ){
-                                if(!obj.getSpApproved().equals("yes"))
+                            if(obj.getVillage().toLowerCase(Locale.ROOT).equals(village1.toLowerCase(Locale.ROOT)) || (obj.getVillage().toLowerCase(Locale.ROOT).equals(village2.toLowerCase(Locale.ROOT)))){
+                                if(!obj.getSpApproved().equals("yes") || obj.getCtrBenApproved().equals("no"))
                                 {
                                     pendingAction1=pendingAction1+1;
                                 }
@@ -131,7 +131,7 @@ public class SP_Action extends AppCompatActivity implements View.OnClickListener
                         {
                             Individual obj=d.toObject(Individual.class);
                             if(obj.getVillage().toLowerCase(Locale.ROOT).equals(village1.toLowerCase(Locale.ROOT)) || (obj.getVillage().toLowerCase(Locale.ROOT).equals(village2.toLowerCase(Locale.ROOT))) ){
-                                if(!obj.getSpApproved().equals("yes"))
+                                if(!obj.getSpApproved().equals("yes") || obj.getCtrBenApproved().equals("no"))
                                 {
                                     pendingAction1=pendingAction1+1;
                                 }
