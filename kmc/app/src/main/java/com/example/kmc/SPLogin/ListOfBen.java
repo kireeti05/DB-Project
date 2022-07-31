@@ -144,7 +144,6 @@ public class ListOfBen extends AppCompatActivity {
                                     {
                                         updateData(obj2.getAadhar());
                                         noOfBen=noOfBen+1;
-
                                     }
                                 }
                             }
@@ -209,7 +208,7 @@ public class ListOfBen extends AppCompatActivity {
             Log.d("PDFCreator", "PDF Path: " + dir);
 
             //This is for random name
-            String number="VillageNote"+System.currentTimeMillis();
+            String number="Special_Officer_Note"+System.currentTimeMillis();
 
 
             File file = new File(dir, "Document" + number + ".pdf");
@@ -225,7 +224,7 @@ public class ListOfBen extends AppCompatActivity {
             p1.setFont(paraFont);
             //add paragraph to document
             doc.add(p1);
-            Paragraph p2 = new Paragraph("DISTRICT SCHEDULED CASTES SERVICES CO – OPERATIVE SOCIETY LTD.,");
+            Paragraph p2 = new Paragraph("DISTRICT SCHEDULED CASTES SERVICES CO – OPERATIVE SOCIETY LTD.");
             p2.setAlignment(Paragraph.ALIGN_CENTER);
             p2.setFont(paraFont);
             //add paragraph to document
@@ -258,9 +257,9 @@ public class ListOfBen extends AppCompatActivity {
             p26.setFont(paraFont);
             //add paragraph to document
             doc.add(p26);
-            Paragraph p27 = new Paragraph("Manager, "+
-                    "District Collector & Chairman  \n"+
-                    "DSCSCDS Ltd,\n"+
+            Paragraph p27 = new Paragraph(
+                    "Special Officer  \n"+
+                    ""+village1+"/"+village2+"\n"+
                     "Khammam.\n");
             p27.setAlignment(Paragraph.ALIGN_LEFT);
             p27.setFont(paraFont);
@@ -273,7 +272,7 @@ public class ListOfBen extends AppCompatActivity {
             //add paragraph to document
             doc.add(p8);
 
-            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – "+village1+"/"+village2+"  –-  Transfer for an amounts of Rs."+ne.get(0).getTotalAmount()+"/- to beneficiary Account of "+ne.get(0).getNoOfBen()+" beneficiaries pertains to their preferred units – Reg.");
+            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – "+village1+"/"+village2+"  –-  approval of beneficiaries "+ne.get(0).getNoOfBen()+" pertains to their preferred units under Dalit bandhu Scheme – Reg.");
             p9.setAlignment(Paragraph.ALIGN_CENTER);
             p9.setFont(paraFont);
             //add paragraph to document
@@ -302,7 +301,7 @@ public class ListOfBen extends AppCompatActivity {
             doc.add(p13);
             Paragraph p14 = new Paragraph(
                     "4.\tInstructions of District Collector & Chairman, DSCSCDS Ltd., Khammam.\n"+
-                            "5.\tLr.Rc.No.E/298/SE/                   /, dt:-. "+today+" of D.P.M, KMM \n");
+                            "5.\tLr.Rc.No.E/298/SE/"+village1+"/"+village2+"/, dt:-. "+today+" of D.P.M, KMM \n");
             p14.setAlignment(Paragraph.ALIGN_LEFT);
             p14.setFont(paraFont);
             //add paragraph to document
@@ -314,17 +313,11 @@ public class ListOfBen extends AppCompatActivity {
             //add paragraph to document
             doc.add(p15);
             Paragraph p16 = new Paragraph(
-                    "Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from  and sanctioned Rs. 10.00 Lakh per each beneficiary for the said purpose vide the proceedings under reference 1st cited.Further it is submitted that an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries is hereby released to their Dalit Bandhu beneficiaries account pertains to their preferred units under Dalit Bandhu Scheme.");
+                    "Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from "+village1+"/"+village2+" and sanctioned Rs. 10.00 Lakh per each "+ne.get(0).getNoOfBen()+" beneficiary for the said purpose vide the proceedings under reference 1st cited.");
             p16.setAlignment(Paragraph.ALIGN_LEFT);
             p16.setFont(paraFont);
             //add paragraph to document
             doc.add(p16);
-            Paragraph p17 = new Paragraph(
-                    "Therefore, the  Manager,                concerned are requested to release and transfer amounts to Dalit Bandhu beneficiaries accounts for an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries furnished at Colm No. (4) of the Annexure.");
-            p17.setAlignment(Paragraph.ALIGN_LEFT);
-            p17.setFont(paraFont);
-            //add paragraph to document
-            doc.add(p17);
             doc.add(p4);
             Paragraph p18 = new Paragraph(
                     "Yours faithfully,");
@@ -342,13 +335,13 @@ public class ListOfBen extends AppCompatActivity {
             doc.add(p4);
             Paragraph p20 = new Paragraph(
                     "\n" +
-                            "District Collector & Chairman,\n");
+                            "Special Officer,\n");
             p20.setAlignment(Paragraph.ALIGN_RIGHT);
             p20.setFont(paraFont);
             //add paragraph to document
             doc.add(p20);
             Paragraph p21 = new Paragraph(
-                    "DSCSCDS Ltd., Khammam\n");
+                    ""+village1+"/"+village2+"\n");
             p21.setAlignment(Paragraph.ALIGN_RIGHT);
             p21.setFont(paraFont);
             //add paragraph to document

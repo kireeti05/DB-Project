@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -23,6 +24,8 @@ import com.example.kmc.CollectorAdapters.myadapter4Collector3;
 import com.example.kmc.Individual;
 import com.example.kmc.NoteElements;
 import com.example.kmc.R;
+import com.example.kmc.SelectionElements;
+import com.example.kmc.SelectionElements2;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,18 +54,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class CollectorAmountDBToBen extends AppCompatActivity {
+public class CollectorAmountDBToBen extends AppCompatActivity implements com.example.kmc.List2 {
 
     public Toolbar toolbar;
     RecyclerView recyclerView;
 
     ArrayList<Individual> datalist;
+    ArrayList<SelectionElements2> selected;
     FirebaseFirestore db;
     String village;
     ProgressBar progressBar;
     Individual obj2;
     String today;
-
+    ImageButton checkAll;
+    ImageButton cancelAll;
     Individual obj;
     List<DocumentSnapshot> list;
     int totalAmount;
@@ -84,9 +89,11 @@ public class CollectorAmountDBToBen extends AppCompatActivity {
         if (extras != null) {
             village= extras.getString("village");
         }
-        adapter=new myadapter4Collector3(datalist,village);
+        adapter=new myadapter4Collector3(datalist,village,CollectorAmountDBToBen.this,CollectorAmountDBToBen.this);
         recyclerView.setAdapter(adapter);
         db=FirebaseFirestore.getInstance();
+        checkAll=findViewById(R.id.checkAll);
+        cancelAll=findViewById(R.id.cancelAll);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         ne=new ArrayList<>();
@@ -262,7 +269,7 @@ public class CollectorAmountDBToBen extends AppCompatActivity {
             //add paragraph to document
             doc.add(p8);
 
-            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – "+village+"  –-  Transfer for an amounts of Rs."+ne.get(0).getTotalAmount()+"/- to beneficiary Account of "+ne.get(0).getNoOfBen()+" beneficiaries pertains to their preferred units – Reg.");
+            Paragraph p9 = new Paragraph("Sub:-\tDSCSCDS Ltd., Khammam District – Dalit Bandhu Scheme – "+village+"  –-  Transfer for an amounts of Rs."+ne.get(0).getTotalAmount()+"/- to vendor accounts of "+ne.get(0).getNoOfBen()+" beneficiaries pertains to their preferred units – Reg.");
             p9.setAlignment(Paragraph.ALIGN_CENTER);
             p9.setFont(paraFont);
             //add paragraph to document
@@ -303,13 +310,13 @@ public class CollectorAmountDBToBen extends AppCompatActivity {
             //add paragraph to document
             doc.add(p15);
             Paragraph p16 = new Paragraph(
-                    "Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from "+village+" and sanctioned Rs. 10.00 Lakh per each beneficiary for the said purpose vide the proceedings under reference 1st cited.Further it is submitted that an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries is hereby released to their Dalit Bandhu beneficiaries account pertains to their preferred units under Dalit Bandhu Scheme.");
+                    "Incompliance to the references 1st to 5th cited, under Dalit Bandhu Scheme, beneficiaries were selected from "+village+" and sanctioned Rs. 10.00 Lakh per each beneficiary for the said purpose vide the proceedings under reference 1st cited.Further it is submitted that an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries is hereby released to their Vendor accounts pertains to their preferred units under Dalit Bandhu Scheme.");
             p16.setAlignment(Paragraph.ALIGN_LEFT);
             p16.setFont(paraFont);
             //add paragraph to document
             doc.add(p16);
             Paragraph p17 = new Paragraph(
-                    "Therefore, the  Manager,                concerned are requested to release and transfer amounts to Dalit Bandhu beneficiaries accounts for an amount of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries furnished at Colm No. (4) of the Annexure.");
+                    "Therefore, the  Manager,                concerned are requested to release and transfer amounts of "+ne.get(0).getTotalAmount()+" of "+ne.get(0).getNoOfBen()+" beneficiaries dalit bandhu account beneficiary account to vendor account furnished at Colm No. (4) of the Annexure.");
             p17.setAlignment(Paragraph.ALIGN_LEFT);
             p17.setFont(paraFont);
             //add paragraph to document
@@ -380,21 +387,19 @@ public class CollectorAmountDBToBen extends AppCompatActivity {
                         if(!obj2.getCtrNote2().equals("yes")) {
                             userTable.addCell(obj2.getVillage());
                             userTable.addCell(obj2.getPreferredUnit());
-                            userTable.addCell(obj2.getDbAccount());
+                            userTable.addCell(obj2.getSo_quotation_amount());
                             userTable.addCell(obj2.getName());
                             userTable.addCell(obj2.getDbBankName());
                             userTable.addCell(obj2.getDbBankAccNo());
                             userTable.addCell(obj2.getDbBankIFSC());
-                            userTable.addCell(obj.getApprovalAmount());
-                            userTable.addCell(obj.getVendorAgency());
-                            userTable.addCell(obj.getVendorBankName());
-                            userTable.addCell(obj.getVendorAccountNo());
-                            userTable.addCell(obj.getVendorIFSC());
+                            userTable.addCell(obj2.getApprovalAmount());
+                            userTable.addCell(obj2.getVendorAgency());
+                            userTable.addCell(obj2.getVendorBankName());
+                            userTable.addCell(obj2.getVendorAccountNo());
+                            userTable.addCell(obj2.getVendorIFSC());
                         }
                     }
                 }
-
-
 
             }
 
@@ -421,5 +426,88 @@ public class CollectorAmountDBToBen extends AppCompatActivity {
         i.putExtra("village",village);
         startActivity(i);
     }
+    @Override
+    public void push(ArrayList<SelectionElements2> list) {
+        selected=list;
+        if(!selected.isEmpty())
+        {
+            checkAll.setVisibility(View.VISIBLE);
+            cancelAll.setVisibility(View.VISIBLE);
+        }else{
+            checkAll.setVisibility(View.GONE);
+            cancelAll.setVisibility(View.GONE);
+        }
 
+    }
+
+    public void checkAll(View view) {
+        for(SelectionElements2 s:selected)
+        {
+            int updateDBAccount=Integer.parseInt(s.getDbAccount())-Integer.parseInt(s.getSoApprovalAmount());
+            String updateAmount=Integer.toString(updateDBAccount);
+            int approvalAmount=Integer.parseInt(s.getBenAccountAmount())+Integer.parseInt(s.getSoApprovalAmount());
+            updateData(s.getAadhar(),"yes",approvalAmount+" released to beneficiary account.",updateAmount,String.valueOf(approvalAmount),"yes","yes");
+        }
+        Toast.makeText(this, "Approved", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+    private void updateData(String aadharNumber, String approved,String status,String collectorSanctionAmount,String approvalAmount,String soApproved,String spApproved) {
+        Map<String, Object> individualInfo = new HashMap<String, Object>();
+        individualInfo.put("status", status);
+        individualInfo.put("ctrApproved2", approved);
+        individualInfo.put("dbAccount", collectorSanctionAmount);
+        individualInfo.put("approvalAmount", approvalAmount);
+        individualInfo.put("soApproved", soApproved);
+        individualInfo.put("spApproved3", spApproved);
+
+        Toast.makeText(this, aadharNumber, Toast.LENGTH_SHORT).show();
+        db.collection("individuals").whereEqualTo("aadhar",aadharNumber)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful() && !task.getResult().isEmpty()){
+                    DocumentSnapshot documentSnapshot=task.getResult().getDocuments().get(0);
+                    String documentID=documentSnapshot.getId();
+                    db.collection("individuals")
+                            .document(documentID)
+                            .update(individualInfo)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(CollectorAmountDBToBen.this, "Status Approval: "+approved, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(CollectorAmountDBToBen.this, CollectorAmountDBToBen.class);
+                                    intent.putExtra("village",village);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CollectorAmountDBToBen.this, "Error occured", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }else{
+
+                    Toast.makeText(CollectorAmountDBToBen.this, "Failed", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+
+    public void cancelAll(View view) {
+        for(SelectionElements2 s:selected)
+        {
+            String collectorSanctionAmount=s.getDbAccount();
+            String approved="no";
+            String soApproved="yes";
+            String spApproved="NA";
+            String status= "Rejected By Collector: "+s.getStatus();
+            int approvalAmount=Integer.parseInt(s.getBenAccountAmount());
+            updateData(s.getAadhar(),approved,status,collectorSanctionAmount,Integer.toString(approvalAmount),soApproved,spApproved);
+        }
+        Toast.makeText(this, "Rejected", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 }

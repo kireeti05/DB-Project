@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -313,19 +314,65 @@ public class addIndividual extends AppCompatActivity {
             individualInfo.put("spNote", "NA");
 
             //
-            db.collection("individuals").add(individualInfo)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            Toast.makeText(addIndividual.this, "Inserted Successfully", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(addIndividual.this, PSAddEdit.class);
-                            i.putExtra("village",village.trim());
-                            i.putExtra("mandal", mandal.trim());
-                            i.putExtra("district",district.trim());
-                            startActivity(i);
-                            finish();
+            db.collection("individuals").whereEqualTo("aadhar",aadharNumber.trim()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot snapshot = task.getResult();
+                        if (!snapshot.isEmpty()) {
+                            Toast.makeText(addIndividual.this, "User already exists.", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            db.collection("individuals").add(individualInfo)
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            Toast.makeText(addIndividual.this, "Inserted Successfully", Toast.LENGTH_SHORT).show();
+                                            Intent i = new Intent(addIndividual.this, PSAddEdit.class);
+                                            i.putExtra("village",village.trim());
+                                            i.putExtra("mandal", mandal.trim());
+                                            i.putExtra("district",district.trim());
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    });
                         }
-                    });
+                    } else {
+
+                    }
+                }
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        for (DocumentSnapshot document : task.getResult()) {
+//                            if (!document.exists()) {
+//                                db.collection("individuals").add(individualInfo)
+//                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+//                                                Toast.makeText(addIndividual.this, "Inserted Successfully", Toast.LENGTH_SHORT).show();
+//                                                Intent i = new Intent(addIndividual.this, PSAddEdit.class);
+//                                                i.putExtra("village",village.trim());
+//                                                i.putExtra("mandal", mandal.trim());
+//                                                i.putExtra("district",district.trim());
+//                                                startActivity(i);
+//                                                finish();
+//                                            }
+//                                        });
+//                                     } else {
+//                                Toast.makeText(addIndividual.this, "User already exists.", Toast.LENGTH_SHORT).show();
+//
+//
+//                            }
+//                        }
+//                    } else {
+//                        Toast.makeText(addIndividual.this, "Error", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+
+
+            });
+
         } else {
             Toast.makeText(this, "Enter all fields", Toast.LENGTH_SHORT).show();
         }

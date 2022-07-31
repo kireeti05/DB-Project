@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kmc.CollectorAdapters.myadapter4Collector2;
 import com.example.kmc.CollectorAdapters.myadapter4Collector3;
+import com.example.kmc.CollectorAdapters.myadapter4CollectorSearch3;
 import com.example.kmc.Individual;
 import com.example.kmc.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +37,7 @@ public class CollectorSearchAmountDBToBen extends AppCompatActivity {
     String searchText;
     String village;
 
-    myadapter4Collector3 adapter;
+    myadapter4CollectorSearch3 adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class CollectorSearchAmountDBToBen extends AppCompatActivity {
             //district= extras.getString("district");
             village=extras.getString("village");
         }
-        adapter=new myadapter4Collector3(datalist,village);
+        adapter=new myadapter4CollectorSearch3(datalist,village);
         recyclerView.setAdapter(adapter);
         db=FirebaseFirestore.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
