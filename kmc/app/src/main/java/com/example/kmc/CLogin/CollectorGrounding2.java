@@ -30,6 +30,7 @@ public class CollectorGrounding2 extends AppCompatActivity{
     ArrayList<Individual> datalist;
     FirebaseFirestore db;
     String village;
+    String district;
     ProgressBar progressBar;
 
     myadapter4Collector4 adapter;
@@ -43,6 +44,7 @@ public class CollectorGrounding2 extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             village= extras.getString("village");
+            district = extras.getString("district");
         }
         adapter=new myadapter4Collector4(datalist,village);
         recyclerView.setAdapter(adapter);
@@ -60,8 +62,10 @@ public class CollectorGrounding2 extends AppCompatActivity{
                         for(DocumentSnapshot d:list)
                         {
                             Individual obj=d.toObject(Individual.class);
-                                if(obj.getGroundingStatus().equals("yes"))
+                            if(obj.getDistrict().equalsIgnoreCase(district)) {
+                                if (obj.getGroundingStatus().equals("yes"))
                                     datalist.add(obj);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);

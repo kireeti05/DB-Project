@@ -72,6 +72,7 @@ public class CollectorAmountToDB2 extends AppCompatActivity implements com.examp
     ImageButton cancelAll;
     int totalAmount;
     int noOfBen;
+    String district;
     String mandal;
     String today;
     myadapter4Collector2 adapter;
@@ -93,6 +94,7 @@ public class CollectorAmountToDB2 extends AppCompatActivity implements com.examp
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             village= extras.getString("village");
+            district= extras.getString("district");
         }
         adapter=new myadapter4Collector2(datalist,village,CollectorAmountToDB2.this,CollectorAmountToDB2.this);
         recyclerView.setAdapter(adapter);
@@ -108,11 +110,13 @@ public class CollectorAmountToDB2 extends AppCompatActivity implements com.examp
                         for(DocumentSnapshot d:list)
                         {
                             obj=d.toObject(Individual.class);
+                            if(obj.getDistrict().equalsIgnoreCase(district)) {
                                 if (obj.getSpApproved2().equals("yes")) {
                                     if (!obj.getCtrApproved().equals("yes") && !obj.getCtrApproved().equals("no")) {
                                         datalist.add(obj);
                                     }
                                 }
+                            }
                         }
                         adapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);
@@ -134,14 +138,15 @@ public class CollectorAmountToDB2 extends AppCompatActivity implements com.examp
                         for(DocumentSnapshot d:list2)
                         {
                             obj2=d.toObject(Individual.class);
+                            if(obj.getDistrict().equalsIgnoreCase(district)) {
                                 if (obj2.getCtrApproved().equals("yes")) {
-                                    if(!obj2.getCtrNote1().equals("yes"))
-                                    {
+                                    if (!obj2.getCtrNote1().equals("yes")) {
                                         updateData(obj2.getAadhar());
-                                        totalAmount=totalAmount+Integer.parseInt(obj2.getDbAccount());
-                                        noOfBen=noOfBen+1;
+                                        totalAmount = totalAmount + Integer.parseInt(obj2.getDbAccount());
+                                        noOfBen = noOfBen + 1;
                                     }
                                 }
+                            }
                         }
                         Log.d("DBen", totalAmount+" "+noOfBen);
                         NoteElements n=new NoteElements(totalAmount,noOfBen);
@@ -376,7 +381,7 @@ public class CollectorAmountToDB2 extends AppCompatActivity implements com.examp
 
             for(DocumentSnapshot d:list) {
                 obj2 = d.toObject(Individual.class);
-                if(obj2.getVillage().toLowerCase(Locale.ROOT).equals(village.toLowerCase(Locale.ROOT))) {
+                if(obj2.getDistrict().equalsIgnoreCase(district)) {
                     if (obj2.getCtrApproved().equals("yes")) {
                         if(!obj2.getCtrNote1().equals("yes")) {
                             userTable.addCell(obj2.getVillage());

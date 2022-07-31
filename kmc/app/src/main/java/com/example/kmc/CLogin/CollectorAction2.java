@@ -166,16 +166,19 @@ public class CollectorAction2 extends AppCompatActivity implements View.OnClickL
             case R.id.c2:
                 i = new Intent(this, CollectorAmountToDB2.class);
                 i.putExtra("village",village);
+                i.putExtra("district",district);
                 startActivity(i);
                 break;
             case R.id.c3:
                 i = new Intent(this, CollectorAmountDBToBen2.class);
                 i.putExtra("village",village);
+                i.putExtra("district",district);
                 startActivity(i);
                 break;
             case R.id.c4:
                 i = new Intent(this, CollectorGrounding2.class);
                 i.putExtra("village",village);
+                i.putExtra("district",district);
                 startActivity(i);
                 break;
             case R.id.c5:
@@ -187,6 +190,7 @@ public class CollectorAction2 extends AppCompatActivity implements View.OnClickL
             case R.id.c6:
                 i = new Intent(this, CollectorDistrictMasterReport.class);
                 i.putExtra("village",village);
+                i.putExtra("district",district);
                 startActivity(i);
                 break;
         }

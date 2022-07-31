@@ -61,8 +61,10 @@ public class CollectorListOfBen2 extends AppCompatActivity{
                         for(DocumentSnapshot d:list)
                         {
                             Individual obj=d.toObject(Individual.class);
-                                if(obj.getSpApproved().equals("yes")&&obj.getCtrBenApproved().equalsIgnoreCase("NA"))
+                            if(obj.getDistrict().equalsIgnoreCase(district)) {
+                                if (obj.getSpApproved().equals("yes") && obj.getCtrBenApproved().equalsIgnoreCase("NA"))
                                     datalist.add(obj);
+                            }
 
                         }
                         adapter.notifyDataSetChanged();
